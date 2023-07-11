@@ -1,0 +1,108 @@
+/todoById/{todo_id}:
+    get:
+        tags: [todo]
+        summary: get Todo
+        parameters:
+            - name: "todo_id"
+              in: "path"
+              type: "number"
+              description: "get todo by id"
+              required: true
+        responses:
+            200:
+                description: You get your todo successfully
+
+/allTodos:
+    get:
+        tags: [todo]
+        summary: get Todos
+        responses:
+            200:
+                description: You get your todo successfully
+
+/addtodo:
+    post:
+        summary: Add todo
+        tags: [todo]
+        requestBody:
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            description:
+                                type: string
+
+        responses:
+            200:
+                description: ok
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            500:
+                description: error
+                content:
+                    application/json:
+                        schema:
+                            type: object
+
+/updateTodo/{todo_id}:
+    put:
+        summary: update todo
+        tags: [todo]
+        requestBody:
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            todo_id:
+                                type: number
+                            description:
+                                type: string
+        responses:
+            200:
+                description: ok
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            500:
+                description: error
+                content:
+                    application/json:
+                        schema:
+                            type: object
+
+/deleteTodo/{todo_id}:
+    delete:
+        summary: delete User
+        tags: [todo]
+        requestBody:
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            todo_id:
+                                type: number
+        responses:
+            200:
+                description: ok
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            404:
+                description: not found
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            500:
+                description: error
+                content:
+                    application/json:
+                        schema:
+                            type: object
