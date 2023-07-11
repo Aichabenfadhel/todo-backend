@@ -3,33 +3,39 @@ import { UserType } from "../../types/index";
 
 export async function selectUsers() {
     try {
-        const result = await pool.query(`SELECT * FROM public.users`);
+        const result = await pool.query(`SELECT * FROM public.todoapp`);
         return result;
     } catch (error) {
         console.log(error);
     }
 }
 
-export async function insertUser(objectUser: UserType) {
+export async function insertUser(
+    firstname: string,
+    lastname: string,
+    email: string,
+    pwd: string
+) {
     try {
-        return await pool.query(`
-            INSERT INTO public.users (firstname, lastname, email, password)
-            VALUES (
-                '${objectUser.firstname}',
-                '${objectUser.lastname}',
-                '${objectUser.email}',
-                '${objectUser.password}'
-            )
-        `);
+        const sql = `
+        INSERT INTO public.todoapp (firstname, lastname, email, pwd)
+        VALUES (
+            '${firstname}',
+            '${lastname}',
+            '${email}',
+            '${pwd}'
+        )
+    `;
+        return await pool.query(sql);
     } catch (error) {
         console.log(error);
     }
 }
 
-export async function deleteUserService(objectUser: UserType) {
+export async function deleteUserService(email: string) {
     try {
         return await pool.query(
-            `DELETE  FROM public.users WHERE email='${objectUser.email}' yarnyar`
+            `DELETE  FROM public.todoapp WHERE email='${email}' ;`
         );
     } catch (error) {
         console.log(error);
@@ -39,7 +45,7 @@ export async function deleteUserService(objectUser: UserType) {
 export async function selectUser(email: string, password: string) {
     try {
         const result = await pool.query(
-            `SELECT * FROM public.users WHERE email='${email}' and password='${password}'`
+            `SELECT * FROM public.todoapp WHERE email='${email}' and pwd='${password}'`
         );
         return result.rows[0];
     } catch (error) {
@@ -50,7 +56,7 @@ export async function selectUser(email: string, password: string) {
 export async function checkEmailExistence(email: string): Promise<boolean> {
     try {
         const result = await pool.query(
-            `SELECT * FROM public.users WHERE email='${email}'`
+            `SELECT * FROM public.todoapp WHERE email='${email}'`
         );
 
         return result.rows.length > 0 ? true : false;
@@ -59,17 +65,17 @@ export async function checkEmailExistence(email: string): Promise<boolean> {
         return false;
     }
 }
-
-
-export async function modifyUser(firstname: string, lastname: string, email: string) {
+export async function checkPasswordValidation(
+    password: string
+): Promise<boolean> {
     try {
-        let sql = `
-        UPDATE public.users
-       SET firstname = '${firstname}' , lastname = '${lastname}'
-       WHERE email='${email}' `
+        const result = await pool.query(
+            `SELECT * FROM public.todoapp WHERE email='${password}'`
+        );
 
-        return await pool.query(sql);
+        return result.rows.length > 0 ? true : false;
     } catch (error) {
         console.log(error);
+        return false;
     }
 }
