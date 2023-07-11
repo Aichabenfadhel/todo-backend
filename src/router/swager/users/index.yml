@@ -1,0 +1,156 @@
+/delete:
+    delete:
+        summary: delete User
+        tags: [User]
+        requestBody:
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            email:
+                                type: string
+        responses:
+            200:
+                description: ok
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            404:
+                description: not found
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            500:
+                description: error
+                content:
+                    application/json:
+                        schema:
+                            type: object
+
+/adduser:
+    post:
+        summary: Add user
+        tags: [User]
+        requestBody:
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            firstname:
+                                type: string
+                            lastname:
+                                type: string
+                            email:
+                                type: string
+                            pwd:
+                                type: string
+        responses:
+            200:
+                description: ok
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            500:
+                description: error
+                content:
+                    application/json:
+                        schema:
+                            type: object
+
+/users:
+    get:
+        summary: get User
+        tags: [User]
+        responses:
+            200:
+                description: ok
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            404:
+                description: not found
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            500:
+                description: error
+                content:
+                    application/json:
+                        schema:
+                            type: object
+
+/login:
+    post:
+        summary: login
+        tags: [Login]
+        requestBody:
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            email:
+                                type: string
+                            password:
+                                type: string
+        responses:
+            200:
+                description: ok
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            404:
+                description: not found
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            500:
+                description: error
+                content:
+                    application/json:
+                        schema:
+                            type: object
+
+/getUser/{email}/{pwd}:
+    get:
+        summary: login
+        tags: [Login]
+        parameters:
+            - name: "email"
+              in: "path"
+              type: "string"
+              description: "get user's email"
+              required: true
+            - name: "pwd"
+              in: "path"
+              type: "string"
+              description: "get user's password"
+              required: true
+        responses:
+            200:
+                description: ok
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            404:
+                description: not found
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            500:
+                description: error
+                content:
+                    application/json:
+                        schema:
+                            type: object
