@@ -1,13 +1,15 @@
 export type UserType = {
+    id: number;
 
-    id: number,
+    firstname: string;
 
-    firstname: string,
+    lastname: string;
 
-    lastname: string,
+    email: string;
 
-    email: string,
-
-    password: string
-
-}
+    password: string;
+};
+export type TodoType = {
+    description: string;
+    completed: boolean;
+};
