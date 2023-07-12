@@ -1,29 +1,67 @@
-/todoById/{todo_id}:
+/todoById/{email}/{pwd}/{todo_id}:
     get:
         tags: [todo]
         summary: get Todo
         parameters:
-            - name: "todo_id"
+            - name: "email"
               in: "path"
-              type: "number"
+              type: "string"
+              description: "get user's email"
+              required: true
+            - name: "pwd"
+              in: "path"
+              type: "string"
+              description: "get user's password"
+              required: true
+            - name: "id"
+              in: "path"
+              type: "string"
               description: "get todo by id"
               required: true
         responses:
             200:
                 description: You get your todo successfully
 
-/allTodos:
+/allTodos/{email}/{pwd}:
     get:
         tags: [todo]
         summary: get Todos
+        parameters:
+            - name: "email"
+              in: "path"
+              type: "string"
+              description: "get user's email"
+              required: true
+            - name: "pwd"
+              in: "path"
+              type: "string"
+              description: "get user's password"
+              required: true
         responses:
             200:
                 description: You get your todo successfully
+            500:
+                description: error while gettin todos
+                content:
+                    application/json:
+                        schema:
+                            type: object
 
-/addtodo:
+/addtodo/{email}/{pwd}:
     post:
         summary: Add todo
         tags: [todo]
+        parameters:
+            - name: "email"
+              in: "path"
+              type: "string"
+              description: "get user's email"
+              required: true
+            - name: "pwd"
+              in: "path"
+              type: "string"
+              description: "get user's password"
+              required: true
         requestBody:
             content:
                 application/json:
@@ -32,16 +70,15 @@
                         properties:
                             description:
                                 type: string
-
         responses:
             200:
-                description: ok
+                description: todo added successfully
                 content:
                     application/json:
                         schema:
                             type: object
             500:
-                description: error
+                description: error while adding todo
                 content:
                     application/json:
                         schema:
@@ -63,13 +100,13 @@
                                 type: string
         responses:
             200:
-                description: ok
+                description: todo updated successfully
                 content:
                     application/json:
                         schema:
                             type: object
             500:
-                description: error
+                description: error while updating todo
                 content:
                     application/json:
                         schema:
@@ -89,7 +126,7 @@
                                 type: number
         responses:
             200:
-                description: ok
+                description: todo deleted successfully
                 content:
                     application/json:
                         schema:
@@ -101,7 +138,7 @@
                         schema:
                             type: object
             500:
-                description: error
+                description: error while deleting todo
                 content:
                     application/json:
                         schema:
