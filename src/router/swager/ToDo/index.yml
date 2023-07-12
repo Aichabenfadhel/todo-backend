@@ -1,4 +1,4 @@
-/todoById/{email}/{pwd}/{todo_id}:
+/todoById/{email}/{pwd}/{id}:
     get:
         tags: [todo]
         summary: get Todo
@@ -84,7 +84,7 @@
                         schema:
                             type: object
 
-/updateTodo/{todo_id}:
+/updateTodo/{email}/{pwd}/{id}:
     put:
         summary: update todo
         tags: [todo]
