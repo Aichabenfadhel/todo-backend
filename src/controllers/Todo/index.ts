@@ -51,10 +51,6 @@ export async function getTodoByIdController(req: Request, res: Response) {
     try {
         const { email, pwd, id } = req.params;
         const todotable = await getTodoById(email, pwd, id);
-        console.log(
-            "🚀 ~ file: index.ts:54 ~ getTodoByIdController ~ todotable:",
-            todotable
-        );
 
         return res.status(200).json({
             error: false,
@@ -71,9 +67,9 @@ export async function getTodoByIdController(req: Request, res: Response) {
 
 export async function updateTodoController(req: Request, res: Response) {
     try {
-        const { todo_id } = req.params;
+        const { email, pwd, id } = req.params;
         const { description } = req.body;
-        await updateTodo(description, Number(todo_id));
+        await updateTodo(email, pwd, id, description);
         return res.status(200).json({
             error: false,
             message: "Todo was updated !",
