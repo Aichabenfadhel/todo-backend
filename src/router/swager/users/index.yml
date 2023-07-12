@@ -86,40 +86,6 @@
                         schema:
                             type: object
 
-/login:
-    post:
-        summary: login
-        tags: [Login]
-        requestBody:
-            content:
-                application/json:
-                    schema:
-                        type: object
-                        properties:
-                            email:
-                                type: string
-                            password:
-                                type: string
-        responses:
-            200:
-                description: ok
-                content:
-                    application/json:
-                        schema:
-                            type: object
-            404:
-                description: not found
-                content:
-                    application/json:
-                        schema:
-                            type: object
-            500:
-                description: error
-                content:
-                    application/json:
-                        schema:
-                            type: object
-
 /getUser/{email}/{pwd}:
     get:
         summary: login
