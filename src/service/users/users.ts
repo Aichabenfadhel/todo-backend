@@ -1,5 +1,4 @@
 import pool from "../../database";
-import { UserType } from "../../types/index";
 
 export async function selectUsers() {
     try {
@@ -70,7 +69,7 @@ export async function checkPasswordValidation(
 ): Promise<boolean> {
     try {
         const result = await pool.query(
-            `SELECT * FROM public.todoapp WHERE email='${password}'`
+            `SELECT * FROM public.todoapp WHERE pwd='${password}'`
         );
 
         return result.rows.length > 0 ? true : false;
