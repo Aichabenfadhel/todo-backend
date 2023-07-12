@@ -74,8 +74,8 @@ export async function updateTodo(
     try {
         const sql = `
         UPDATE public.todoapp
-         SET todo = jsonb_set(todo, 'todo::jsonb->'${id}'->description', '"${description}"')
-          WHERE email='${email}' and pwd='${pwd}';
+        SET todo = jsonb_set(todo, '{${id}, description}', '"${description}"')
+        WHERE email = '${email}' AND pwd = '${pwd}';
         `;
         console.log("🚀 ~ file: index.ts:80 ~ sql:", sql);
 
@@ -88,8 +88,9 @@ export async function updateTodo(
 export async function deleteTodo(id: number) {
     try {
         pool.query(`
-        DELETE FROM public.todo
-	    WHERE todo_id='${id}';
+        UPDATE public.todoapp
+        SET todo = todo - '${id}'
+        WHERE email= '${email}' AND pwd = '${pwd}';
         `);
     } catch (error) {
         throw error;
