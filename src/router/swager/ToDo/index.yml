@@ -88,14 +88,28 @@
     put:
         summary: update todo
         tags: [todo]
+        parameters:
+            - name: "email"
+              in: "path"
+              type: "string"
+              description: "get user's email"
+              required: true
+            - name: "pwd"
+              in: "path"
+              type: "string"
+              description: "get user's password"
+              required: true
+            - name: "id"
+              in: "path"
+              type: "string"
+              description: "get todo by id"
+              required: true
         requestBody:
             content:
                 application/json:
                     schema:
                         type: object
                         properties:
-                            todo_id:
-                                type: number
                             description:
                                 type: string
         responses:
