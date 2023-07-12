@@ -1,36 +1,69 @@
 import { QueryResult } from "pg";
 import pool from "../../database";
 
-export async function addTodo(description: string) {
-    try {
-        const sql = `INSERT INTO public.todo(
-             description)
-            VALUES ('${description}' )`;
+import { TodoType } from "../../types";
 
+export async function idGenerator() {
+    try {
+        const sql = "SELECT uuid_generate_v4();";
+        const id = await pool.query(sql);
+        return id.rows[0].uuid_generate_v4;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getOldTodos(email: string, pwd: string) {
+    const sql = `select todo::jsonb from public.todoapp WHERE email='${email}' and pwd='${pwd}' `;
+    const result = await pool.query(sql);
+    return result.rows[0].todo;
+}
+
+export async function addTodo(email: string, pwd: string, description: string) {
+    try {
+        const id = await idGenerator();
+        const oldTodo = await getOldTodos(email, pwd);
+        const todos: Record<string, TodoType> = {
+            ...oldTodo,
+            [id]: { description: description, completed: false },
+        };
+        const todo = JSON.stringify(todos);
+        const sql = `
+            UPDATE public.todoapp
+            SET todo = '${todo}'::jsonb
+            WHERE email='${email}' and pwd='${pwd}';`;
         pool.query(sql);
     } catch (error) {
         throw error;
     }
 }
 
-export async function getallTodos(): Promise<QueryResult<any>> {
+export async function getallTodos(
+    email: string,
+    pwd: string
+): Promise<QueryResult<any>> {
     try {
-        const alltodosTable = await pool.query("SELECT * FROM public.todo;");
-
+        const alltodosTable = await pool.query(
+            `SELECT todo FROM public.todoapp WHERE email='${email}' and pwd='${pwd}' ;`
+        );
         return alltodosTable;
     } catch (error) {
         throw error;
     }
 }
 
-export async function getTodoById(id: number) {
+export async function getTodoById(email: string, pwd: string, id: string) {
     try {
-        const sql = `SELECT *
-                    FROM public.todo
-                     WHERE todo_id='${id}';`;
+        const sql = `SELECT todo::jsonb->'${id}'
+                    FROM public.todoapp
+                     WHERE email='${email}' and pwd='${pwd}' ;`;
 
-        const todotable = pool.query(sql);
-        console.log(todotable);
+        const todotable = await pool.query(sql);
+        console.log(
+            "🚀 ~ file: index.ts:62 ~ getTodoById ~  todotable:",
+            todotable
+        );
+
         return todotable;
     } catch (error) {
         throw error;
