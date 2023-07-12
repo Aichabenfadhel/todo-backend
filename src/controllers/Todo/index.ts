@@ -85,9 +85,8 @@ export async function updateTodoController(req: Request, res: Response) {
 
 export async function deleteTodoController(req: Request, res: Response) {
     try {
-        const { todo_id } = req.body;
-
-        await deleteTodo(todo_id);
+        const { email, pwd, id } = req.params;
+        await deleteTodo(email, pwd, id);
         return res.status(200).json({
             error: false,
             message: "Todo was deleted !",
