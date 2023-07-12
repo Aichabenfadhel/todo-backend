@@ -85,7 +85,7 @@ export async function updateTodo(
     }
 }
 
-export async function deleteTodo(id: number) {
+export async function deleteTodo(email: string, pwd: string, id: string) {
     try {
         pool.query(`
         UPDATE public.todoapp
