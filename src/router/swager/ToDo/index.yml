@@ -126,18 +126,26 @@
                         schema:
                             type: object
 
-/deleteTodo/{todo_id}:
+/deleteTodo/{email}/{pwd}/{id}:
     delete:
         summary: delete User
         tags: [todo]
-        requestBody:
-            content:
-                application/json:
-                    schema:
-                        type: object
-                        properties:
-                            todo_id:
-                                type: number
+        parameters:
+            - name: "email"
+              in: "path"
+              type: "string"
+              description: "get user's email"
+              required: true
+            - name: "pwd"
+              in: "path"
+              type: "string"
+              description: "get user's password"
+              required: true
+            - name: "id"
+              in: "path"
+              type: "string"
+              description: "get todo by id"
+              required: true
         responses:
             200:
                 description: todo deleted successfully
