@@ -12,8 +12,9 @@ import {
 export async function addTodoController(req: Request, res: Response) {
     try {
         const { description } = req.body;
+        const { email, pwd } = req.params;
 
-        await addTodo(description);
+        await addTodo(email, pwd, description);
 
         return res.status(200).json({
             error: false,
@@ -30,7 +31,9 @@ export async function addTodoController(req: Request, res: Response) {
 
 export async function getAllTodosController(req: Request, res: Response) {
     try {
-        const todosTable = await getallTodos();
+        const { email, pwd } = req.params;
+
+        const todosTable = await getallTodos(email, pwd);
         return res.status(200).json({
             error: false,
             data: todosTable.rows,
@@ -46,14 +49,16 @@ export async function getAllTodosController(req: Request, res: Response) {
 
 export async function getTodoByIdController(req: Request, res: Response) {
     try {
-        const { todo_id } = req.params;
-        const todotable = await getTodoById(Number(todo_id));
-
-        console.log(todotable.rows);
+        const { email, pwd, id } = req.params;
+        const todotable = await getTodoById(email, pwd, id);
+        console.log(
+            "🚀 ~ file: index.ts:54 ~ getTodoByIdController ~ todotable:",
+            todotable
+        );
 
         return res.status(200).json({
             error: false,
-            data: todotable.rows,
+            data: todotable,
         });
     } catch (error) {
         return res
