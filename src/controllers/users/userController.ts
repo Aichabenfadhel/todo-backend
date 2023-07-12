@@ -79,8 +79,6 @@ export async function deleteUserController(
 export async function userLoginController(req: Request, res: Response) {
     const { email, pwd } = req.params;
 
-    // const Email:string=email.slice(1)
-    // const Pwd:string=pwd.slice(1)
     const checkemail = await checkEmailExistence(email);
     if (checkemail) {
         try {
@@ -112,44 +110,3 @@ export async function userLoginController(req: Request, res: Response) {
         });
     }
 }
-
-// export async function login(request: Request, response: Response) {
-//     const { email, password } = request.body;
-//     try {
-//         const checkemail = await checkEmailExistence(email);
-//         if (checkemail) {
-//             const checkpassword = await checkPasswordValidation(password);
-
-//             if (checkpassword) {
-//                 const result: any = await selectUser(email, password);
-
-//                 if (result.length === 0) {
-//                     return response.status(200).json({
-//                         error: true,
-//                         message: "Error while getting users",
-//                     });
-//                 } else {
-//                     delete result.password;
-//                     return response
-//                         .status(200)
-//                         .json({ error: false, data: result });
-//                 }
-//             } else {
-//                 return response.status(200).json({
-//                     error: true,
-//                     message: "Verify your password",
-//                 });
-//             }
-//         } else {
-//             return response.status(200).json({
-//                 error: true,
-//                 message: "Error User's email doesn't exist",
-//             });
-//         }
-//     } catch (error) {
-//         console.log(error);
-//         return response
-//             .status(200)
-//             .json({ error: true, message: "Error while getting users" });
-//     }
-// }
