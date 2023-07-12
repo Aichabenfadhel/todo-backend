@@ -59,22 +59,27 @@ export async function getTodoById(email: string, pwd: string, id: string) {
                      WHERE email='${email}' and pwd='${pwd}' ;`;
 
         const todotable = await pool.query(sql);
-        console.log(
-            "🚀 ~ file: index.ts:62 ~ getTodoById ~  todotable:",
-            todotable
-        );
-
-        return todotable;
+        return todotable.rows[0];
     } catch (error) {
         throw error;
     }
 }
 
-export async function updateTodo(description: string, id: number) {
+export async function updateTodo(
+    email: string,
+    pwd: string,
+    id: string,
+    description: string
+) {
     try {
-        pool.query(`UPDATE public.todo
-        SET  description='${description}'
-        WHERE todo_id='${id}'`);
+        const sql = `
+        UPDATE public.todoapp
+         SET todo = jsonb_set(todo, 'todo::jsonb->'${id}'->description', '"${description}"')
+          WHERE email='${email}' and pwd='${pwd}';
+        `;
+        console.log("🚀 ~ file: index.ts:80 ~ sql:", sql);
+
+        await pool.query(sql);
     } catch (error) {
         throw error;
     }
