@@ -77,7 +77,24 @@ export async function updateTodo(
         SET todo = jsonb_set(todo, '{${id}, description}', '"${description}"')
         WHERE email = '${email}' AND pwd = '${pwd}';
         `;
-        console.log("🚀 ~ file: index.ts:80 ~ sql:", sql);
+
+        await pool.query(sql);
+    } catch (error) {
+        throw error;
+    }
+}
+export async function updateTodocompleted(
+    email: string,
+    pwd: string,
+    id: string,
+    completed: boolean
+) {
+    try {
+        const sql = `
+        UPDATE public.todoapp
+        SET todo = jsonb_set(todo, '{${id}, completed}', '${completed}')
+        WHERE email = '${email}' AND pwd = '${pwd}';
+        `;
 
         await pool.query(sql);
     } catch (error) {
