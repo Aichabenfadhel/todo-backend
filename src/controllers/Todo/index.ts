@@ -5,6 +5,7 @@ import {
     getTodoById,
     getallTodos,
     updateTodo,
+    updateTodocompleted,
 } from "../../service/Todo";
 
 //Create a todo
@@ -73,6 +74,24 @@ export async function updateTodoController(req: Request, res: Response) {
         return res.status(200).json({
             error: false,
             message: "Todo was updated !",
+        });
+    } catch (error) {
+        return res
+            .status(500)
+            .json({ error: true, message: "Error while updating todo " });
+    }
+}
+export async function updateTodocompletedController(
+    req: Request,
+    res: Response
+) {
+    try {
+        const { email, pwd, id } = req.params;
+        const { completed } = req.body;
+        await updateTodocompleted(email, pwd, id, completed);
+        return res.status(200).json({
+            error: false,
+            message: "Todo completed was updated !",
         });
     } catch (error) {
         return res
