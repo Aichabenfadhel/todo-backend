@@ -125,6 +125,47 @@
                     application/json:
                         schema:
                             type: object
+/updateTodocompleted/{email}/{pwd}/{id}:
+    put:
+        summary: update todo completed
+        tags: [todo]
+        parameters:
+            - name: "email"
+              in: "path"
+              type: "string"
+              description: "get user's email"
+              required: true
+            - name: "pwd"
+              in: "path"
+              type: "string"
+              description: "get user's password"
+              required: true
+            - name: "id"
+              in: "path"
+              type: "string"
+              description: "get todo by id"
+              required: true
+        requestBody:
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            completed:
+                                type: boolean
+        responses:
+            200:
+                description: todo updated successfully
+                content:
+                    application/json:
+                        schema:
+                            type: object
+            500:
+                description: error while updating todo
+                content:
+                    application/json:
+                        schema:
+                            type: object
 
 /deleteTodo/{email}/{pwd}/{id}:
     delete:
