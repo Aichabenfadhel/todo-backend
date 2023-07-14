@@ -37,7 +37,7 @@ export async function getAllTodosController(req: Request, res: Response) {
         const todosTable = await getallTodos(email, pwd);
         return res.status(200).json({
             error: false,
-            data: todosTable.rows,
+            data: todosTable.rows[0],
         });
     } catch (error) {
         return res
