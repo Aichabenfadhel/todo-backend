@@ -59,7 +59,7 @@ export async function getTodoById(email: string, pwd: string, id: string) {
                      WHERE email='${email}' and pwd='${pwd}' ;`;
 
         const todotable = await pool.query(sql);
-        return todotable.rows[0];
+        return todotable.rows[0].todo;
     } catch (error) {
         throw error;
     }
