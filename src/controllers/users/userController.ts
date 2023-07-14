@@ -89,7 +89,7 @@ export async function userLoginController(req: Request, res: Response) {
                 return res.status(200).json({
                     error: false,
                     message: "Getting user successfully",
-                    data: result.rows,
+                    data: result,
                 });
             } else {
                 return res.status(200).json({
