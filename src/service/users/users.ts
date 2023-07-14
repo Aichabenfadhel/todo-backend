@@ -17,12 +17,13 @@ export async function insertUser(
 ) {
     try {
         const sql = `
-        INSERT INTO public.todoapp (firstname, lastname, email, pwd)
+        INSERT INTO public.todoapp (firstname, lastname, email, pwd,todo)
         VALUES (
             '${firstname}',
             '${lastname}',
             '${email}',
-            '${pwd}'
+            '${pwd}',
+            '{}'
         )
     `;
         return await pool.query(sql);
